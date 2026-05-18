@@ -1,0 +1,109 @@
+{
+  "apis": [
+    {
+      "id": "yelp-like-local-search",
+      "title": "Local Search API",
+      "category": "marketplace",
+      "human_trust_rating": 82,
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/businesses/search",
+          "operation_id": "searchBusinesses",
+          "parameters": [
+            { "name": "term", "type": "string", "required": false, "enum": null, "example": "coffee" },
+            { "name": "location", "type": "string", "required": true, "enum": ["NYC", "SF", "LA"], "example": "SF" },
+            { "name": "limit", "type": "integer", "required": false, "enum": null, "example": 10 }
+          ],
+          "response_schema": { "businesses": "array", "total": "integer" },
+          "actual_accepts": { "term": "string", "location": "free_text", "limit": "integer" },
+          "actual_response": { "businesses": "array", "total": "integer" }
+        }
+      ]
+    },
+    {
+      "id": "twilio-like-lookup",
+      "title": "Phone Lookup API",
+      "category": "control",
+      "human_trust_rating": 96,
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/lookup",
+          "operation_id": "lookupPhone",
+          "parameters": [
+            { "name": "phone_number", "type": "string", "required": true, "enum": null, "example": "+14155550100" },
+            { "name": "country_code", "type": "string", "required": false, "enum": null, "example": "US" }
+          ],
+          "response_schema": { "valid": "boolean", "carrier": "object" },
+          "actual_accepts": { "phone_number": "string", "country_code": "string" },
+          "actual_response": { "valid": "boolean", "carrier": "object" }
+        }
+      ]
+    },
+    {
+      "id": "network-qos",
+      "title": "Network QoS API",
+      "category": "network-as-code",
+      "human_trust_rating": 58,
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/sessions/qos",
+          "operation_id": "createQosSession",
+          "parameters": [
+            { "name": "device_id", "type": "string", "required": true, "enum": null, "example": "device-123" },
+            { "name": "profile", "type": "string", "required": true, "enum": ["low", "medium", "high"], "example": "high" },
+            { "name": "duration_seconds", "type": "integer", "required": true, "enum": null, "example": 300 }
+          ],
+          "response_schema": { "session_id": "string", "expires_at": "string" },
+          "actual_accepts": { "device_id": "string", "profile": "free_text", "duration_seconds": "integer", "application_id": "string" },
+          "actual_response": { "session_id": "string", "expires_at": "string", "policy_state": "string" }
+        }
+      ]
+    },
+    {
+      "id": "longtail-weather",
+      "title": "Long Tail Weather API",
+      "category": "long-tail",
+      "human_trust_rating": 35,
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/forecast",
+          "operation_id": "getForecast",
+          "parameters": [
+            { "name": "city", "type": "string", "required": true, "enum": null, "example": "Paris" },
+            { "name": "units", "type": "string", "required": false, "enum": ["metric", "imperial"], "example": "metric" },
+            { "name": "days", "type": "integer", "required": false, "enum": null, "example": 3 },
+            { "name": "mode", "type": "string", "required": false, "enum": null, "example": "json" }
+          ],
+          "response_schema": { "forecast": "array", "city": "string" },
+          "actual_accepts": { "q": "string", "units": "free_text", "cnt": "integer" },
+          "actual_response": { "list": "array", "name": "string", "cod": "string" }
+        }
+      ]
+    },
+    {
+      "id": "router-inference",
+      "title": "Model Router API",
+      "category": "routing",
+      "human_trust_rating": 62,
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/route",
+          "operation_id": "routePrompt",
+          "parameters": [
+            { "name": "prompt", "type": "string", "required": true, "enum": null, "example": "summarize" },
+            { "name": "latency_budget_ms", "type": "integer", "required": false, "enum": null, "example": 500 },
+            { "name": "quality", "type": "string", "required": false, "enum": ["low", "medium", "high"], "example": "medium" }
+          ],
+          "response_schema": { "model": "string", "cost_estimate": "number" },
+          "actual_accepts": { "prompt": "string", "latency_budget_ms": "integer", "quality": "free_text" },
+          "actual_response": { "model": "string", "cost_estimate": "number", "reason": "string" }
+        }
+      ]
+    }
+  ]
+}
